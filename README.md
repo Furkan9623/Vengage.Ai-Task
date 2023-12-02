@@ -34,6 +34,12 @@
   
  ![all contacts img](https://github.com/Furkan9623/Vengage.Ai-Task/assets/109727423/f3c0b866-bc5e-4788-9f1b-514e82d9580d)
 
+ 
+# Search Contacts:
+  
+ ![Search contact img](https://github.com/Furkan9623/Vengage.Ai-Task/assets/109727423/0cf737b8-fe18-4662-b4ab-bda58f15550c)
+
+
  # Add Contacts:
 
  ![add contacts img](https://github.com/Furkan9623/Vengage.Ai-Task/assets/109727423/e9998330-3792-4e85-8d84-5a075545140d)
