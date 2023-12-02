@@ -9,7 +9,7 @@ const app = express();
 // middle ware
 app.use(cors());
 app.use(express.json());
-
+app.get("/", async (req, res) => res.send("<h1>Application Ready....</h1>"));
 // router
 app.use("/api/v1/contact", contact_router);
 // global errror
