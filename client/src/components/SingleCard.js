@@ -7,9 +7,9 @@ import { CardActionArea, Button } from "@mui/material";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import { useNavigate } from "react-router-dom";
 
-export default function SingleCard({ elem}) {
+export default function SingleCard({ elem }) {
   const navigate = useNavigate();
-  const { name, phone } = elem;
+  const { name, phone, _id } = elem;
   return (
     <Card sx={{ width: "fit-content", margin: "auto", padding: "1rem" }}>
       <CardActionArea>
@@ -21,8 +21,13 @@ export default function SingleCard({ elem}) {
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            sx={{ textTransform: "capitalize" }}
+          >
+            {name || "Md Furkan"}
           </Typography>
           <Typography
             sx={{
@@ -32,7 +37,8 @@ export default function SingleCard({ elem}) {
               gap: "1rem",
             }}
           >
-            +91 {phone} <PhoneEnabledIcon color="error" fontSize="medium" />{" "}
+            +91 {phone || "1234561234"}{" "}
+            <PhoneEnabledIcon color="error" fontSize="medium" />
           </Typography>
         </CardContent>
         <Button
@@ -40,7 +46,7 @@ export default function SingleCard({ elem}) {
           variant="contained"
           color="warning"
           fullWidth
-          onClick={() => navigate("/update")}
+          onClick={() => navigate(`/update/${_id}`)}
           sx={{ fontWeight: 600 }}
         >
           EDIT CONTACT

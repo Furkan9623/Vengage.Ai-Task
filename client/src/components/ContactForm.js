@@ -1,9 +1,13 @@
 import { Button, TextField, Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addContacts } from "../api/contact-api";
-const ContactForm = ({ isUpdate }) => {
+import { addContacts, updateContact } from "../api/contact-api";
+const ContactForm = ({ isUpdate, singleContacts }) => {
   const [formInput, setFormInput] = useState({ name: "", phone: "" });
+
+  useEffect(() => {
+    setFormInput(singleContacts);
+  }, [singleContacts]);
   const handleChange = (e) => {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
@@ -14,6 +18,18 @@ const ContactForm = ({ isUpdate }) => {
     const error = result?.response?.data?.message;
     return result?.status === 200 ? navigate("/all-contacts") : alert(error);
   };
+
+  const updateFormSubmit = async (e) => {
+    e.preventDefault();
+    const result = await updateContact(singleContacts?._id, formInput);
+    const error = result?.response?.data?.message;
+    return result?.status === 200
+      ? (navigate("/all-contacts"), alert("contact update successfull"))
+      : error
+      ? alert(error)
+      : alert(result?.message);
+  };
+
   return (
     <Box
       sx={{
@@ -25,7 +41,7 @@ const ContactForm = ({ isUpdate }) => {
     >
       <form
         style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-        onSubmit={addFormSubmitForm}
+        onSubmit={isUpdate ? updateFormSubmit : addFormSubmitForm}
       >
         <Typography variant="h4">
           {isUpdate ? "UPDATE CONTACT" : "ADD CONTACT"}
@@ -33,12 +49,14 @@ const ContactForm = ({ isUpdate }) => {
         <TextField
           name="name"
           size="small"
+          value={formInput?.name}
           label="Enter name....."
           onChange={handleChange}
         />
         <TextField
           name="phone"
           size="small"
+          value={formInput?.phone}
           label="Enter phone......"
           onChange={handleChange}
         />

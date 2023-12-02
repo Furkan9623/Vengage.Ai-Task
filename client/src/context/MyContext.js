@@ -6,18 +6,18 @@ const ContextProvider = ({ children }) => {
   const [contact, setContact] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const loadingFunction = () => {
+  function loadingFunction() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  };
+  }
   return (
-    <contactContext.Provider value={{ contact, setContact }}>
-      <loadingContext.Provider value={{ loading, setLoading, loadingFunction }}>
+    <loadingContext.Provider value={{ loading, setLoading, loadingFunction }}>
+      <contactContext.Provider value={{ contact, setContact }}>
         {children}
-      </loadingContext.Provider>
-    </contactContext.Provider>
+      </contactContext.Provider>
+    </loadingContext.Provider>
   );
 };
 

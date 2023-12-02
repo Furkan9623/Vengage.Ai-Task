@@ -20,7 +20,7 @@ function App() {
           element={loading ? <Spinner /> : <AddContact />}
         />
         <Route path="/all-contacts" element={<AllContact />} />
-        <Route path="/update" element={<UpdateContact />} />
+        <Route path="/update/:id" element={<UpdateContact />} />
       </Routes>
     </div>
   );

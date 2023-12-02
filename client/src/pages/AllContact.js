@@ -11,11 +11,14 @@ const AllContact = () => {
   const getAllContacts = async () => {
     setLoading(true);
     const result = await allContacts(searchQuery);
-
+    setLoading(false);
+    console.log(result);
     const error = result?.response?.data?.message;
     return result?.status === 200
-      ? (setContact(result?.data?.allContact), setLoading(false))
-      : alert(error);
+      ? setContact(result?.data?.allContact)
+      : error
+      ? alert(error)
+      : alert(result?.message);
   };
   useEffect(() => {
     getAllContacts();
@@ -32,47 +35,47 @@ const AllContact = () => {
     };
   };
   const handleSearchNumber = (e) => {
-    console.log(e.target.value);
     setSearchQuery(e.target.value);
   };
-  console.log("searchQuery", searchQuery);
   const magicFunc = Debounce(handleSearchNumber, 1000);
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Box
-          sx={{
-            width: "60%",
-            margin: "auto",
-          }}
-        >
-          <TextField
-            fullWidth
-            size="small"
-            label="Search Contact by name......"
-            onChange={magicFunc}
-          />
-          {contact?.length > 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                margin: "auto",
-                marginTop: "2rem",
-                flexWrap: "wrap",
-                gap: "1rem",
-              }}
-            >
-              {contact?.map((elem) => {
-                return <SingleCard elem={elem} />;
-              })}
-            </Box>
-          ) : (
-            <h2>No Contact found</h2>
-          )}
-        </Box>
-      )}
+      <Box
+        sx={{
+          width: "60%",
+          margin: "auto",
+        }}
+      >
+        <TextField
+          fullWidth
+          size="small"
+          label="Search Contact by name......"
+          onChange={magicFunc}
+        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            {contact?.length > 0 ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  margin: "auto",
+                  marginTop: "2rem",
+                  flexWrap: "wrap",
+                  gap: "1rem",
+                }}
+              >
+                {contact?.map((elem) => {
+                  return <SingleCard key={elem._id} elem={elem} />;
+                })}
+              </Box>
+            ) : (
+              <h2>No Contact found</h2>
+            )}
+          </>
+        )}
+      </Box>
     </>
   );
 };
